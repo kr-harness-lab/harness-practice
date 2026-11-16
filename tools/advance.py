@@ -7,8 +7,10 @@
 프로젝트와 차시: blog 09~12 · ledger 13~14 · trip 15~16. reference/<차시>/ 의 파일마다 projects/<프로젝트>/ 의 같은 파일을 본다.
 - 내 폴더에 없으면 더한다(+). 이미 같으면 그대로 둔다
 - 강사가 실은 판 그대로면(내가 고치지 않았으면) 새 판으로 바꾼다(~)
-- 내가 고친 파일이면 그대로 둔다(=). 단 지금 차시 뒤로 강사 판도 바뀌었으면 충돌(!) — 무엇이 다른지 보이고,
+- 내가 고친 파일이면 그대로 둔다(=). 단 강사 판도 바뀌었으면 충돌(!) — 무엇이 다른지 보이고,
   아무 파일도 바꾸지 않은 채 exit code 1 로 멈춘다. 덮어쓰지 않는다
+  「강사 판도 바뀌었다」 는 둘 가운데 하나다 — 가져올 차시의 판이 지금 차시의 판과 다르거나,
+  같은 차시라도 내가 그 파일을 마지막으로 고친 뒤에 강사가 고친 판이 들어왔거나(강사가 고친 것을 받은 뒤)
 「강사가 실은 판」은 이 저장소의 git 기록에 있는 reference/*/<같은 경로> 의 모든 판과 지금 reference/ 의 파일이다.
 examples/ 의 graph.yaml · settings.json · agents/*.md 처럼 제자리에 놓아 쓰는 파일(PLACE)은 같은 규칙으로 제자리에 놓는다.
 내 폴더에만 있는 파일(글 · 가계부 · 조사 결과 · 고쳐 둔 CLAUDE.md · SKILL.md …)은 건드리지 않는다. 지우는 파일은 없다.
@@ -16,6 +18,9 @@ exit code — 0: 가져옴(가져올 것이 없었음) · 1: 충돌 · 잘못된
 
 보장하지 않는 것 — 내가 고친 내용과 강사의 새 판을 합쳐 주지 않는다(충돌이면 멈출 뿐). 내 판이 강사의 어느 판과 글자 하나까지
 같으면 「고치지 않았다」로 본다. git 기록이 없는 사본에서는 지금 reference/ 의 판만 강사 판으로 안다(그 밖은 충돌로 멈춘다).
+「내가 고친 뒤에 강사 판이 들어왔나」 는 시각으로 가린다 — 커밋해 둔 내 파일은 내 branch 에 들어온 커밋 시각끼리,
+커밋하지 않은 내 파일은 파일을 고친 시각끼리 견준다. 그래서 파일 시각만 바뀌는 일(다른 branch 로 갔다 오기 등) 뒤에는
+바뀐 것이 없어도 충돌로 멈출 수 있다 — 그때는 차이를 보고 --keep 으로 넘긴다. 모르고 지나치는 쪽보다 멈추는 쪽을 골랐다.
 """
 import argparse
 import difflib
@@ -86,6 +91,24 @@ def current(project, work):
     return now
 
 
+def git(*args):
+    r = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, encoding="utf-8")
+    return r.stdout.strip() if r.returncode == 0 else ""
+
+
+def arrived_after(project, rel, src, mine):
+    """강사 판(src)이, 내가 내 파일을 마지막으로 고친 뒤에 들어왔나.
+
+    커밋해 둔 판 그대로면 내 branch 에 들어온 커밋 시각끼리(강사가 고친 것을 받은 merge 도 그 시각이다),
+    커밋하지 않은 판이면 파일을 고친 시각끼리 견준다 — 받으면 git 이 바뀐 강사 파일을 새로 쓴다."""
+    path, theirs = f"projects/{project}/{rel}", src.relative_to(ROOT).as_posix()
+    if git("rev-parse", f"HEAD:{path}") == blob(mine):
+        t_mine = git("log", "-1", "--first-parent", "--format=%ct", "--", path)
+        t_theirs = git("log", "-1", "--first-parent", "--format=%ct", "--", theirs)
+        return bool(t_mine and t_theirs) and int(t_theirs) > int(t_mine)
+    return src.stat().st_mtime > (ROOT / path).stat().st_mtime
+
+
 def diff(mine, theirs, a, b):
     try:
         lines = difflib.unified_diff(mine.decode("utf-8").splitlines(), theirs.decode("utf-8").splitlines(),
@@ -126,7 +149,8 @@ def main():
             add.append((rel, src))
         elif {blob(mine), blob(mine.replace(b"\r\n", b"\n"))} & known.get(rel, set()):
             change.append((rel, src))                 # 강사 판 그대로 — 고치지 않았다
-        elif rel in a.keep or (rel in base and base[rel].read_bytes() == theirs):
+        elif rel in a.keep or (rel in base and base[rel].read_bytes() == theirs
+                               and not arrived_after(a.project, rel, src, mine)):
             kept.append(rel)                          # 내가 고쳤고, 강사 판은 그 뒤로 바뀌지 않았다(또는 --keep)
         else:
             conflict.append((rel, src, mine, theirs))

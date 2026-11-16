@@ -17,7 +17,7 @@
 | `reference/09` … `reference/12` | 블로그의 차시별 시작 상태입니다(보기만 하는 폴더). 10 은 수집 · 작성 단계와 hook, 11 은 검사 · 승인(PR) 단계, 12 는 매일 아침 실행하는 GitHub Actions workflow(`examples/daily.yml`) · `daily.py` · 운영 기록 점검 `steps/audit.py` 를 더합니다. |
 | `reference/13` · `reference/14` | 가계부의 차시별 시작 상태입니다. 13 은 영수증을 `inbox/` 에 넣으면 skill 의 기준대로 읽어 형식 검사를 거쳐 `ledger.xlsx` 에 한 줄 더하고, 14 는 같은 영수증을 두 번 적지 않게 하는 `seen` · `dup` 단계와 카드 명세서 맞추기 `reconcile.py` 를 더합니다. |
 | `reference/15` · `reference/16` | 여행 계획의 차시별 시작 상태입니다. 15 는 조사 subagent 넷과 경로 hook, 16 은 일정 subagent(planner) · constraint check `constraints.py` · 고르기 `choose.py` 를 더합니다. |
-| `tools/advance.py` | 차시를 넘길 때 그 차시의 강사 파일을 작업 폴더로 가져옵니다. 내가 고친 파일은 덮어쓰지 않고, 강사도 바꾼 파일이면 차이를 보이고 아무것도 바꾸지 않은 채 멈춥니다(exit code 1). |
+| `tools/advance.py` | 차시를 넘길 때 그 차시의 강사 파일을 작업 폴더로 가져옵니다. 내가 고친 파일은 덮어쓰지 않고, 강사도 바꾼 파일이면 차이를 보이고 아무것도 바꾸지 않은 채 멈춥니다(exit code 1). 차시를 넘길 때뿐 아니라, 강사가 고친 것을 받은 뒤 같은 차시로 다시 실행해도 같습니다. |
 | `docs` | 블로그 페이지입니다. GitHub Pages 가 main 의 `/docs` 를 올립니다. `projects/blog` 의 `make_site.py` 만 이 폴더를 고칩니다. |
 
 ## 받기 — 내 GitHub 계정으로 fork
@@ -69,6 +69,6 @@ git pull --no-rebase --no-edit upstream main
 git push
 ```
 
-`reset --hard` 나 강사 main 으로 덮어쓰는 명령은 쓰지 않습니다 — 내 작업 폴더의 글 · 가계부 · 여행 계획이 지워집니다. 강사가 고친 차시 파일은 `reference/` 에 들어오고, 작업 폴더에는 `tools/advance.py` 가 가져옵니다.
+`reset --hard` 나 강사 main 으로 덮어쓰는 명령은 쓰지 않습니다 — 내 작업 폴더의 글 · 가계부 · 여행 계획이 지워집니다. 강사가 고친 차시 파일은 `reference/` 에 들어오고, 작업 폴더에는 `tools/advance.py` 가 가져옵니다. 받은 뒤 작업 폴더에서 지금 차시 번호로 `advance.py` 를 다시 실행하면, 내가 고치지 않은 파일은 새 판으로 바뀌고 내가 고친 파일은 강사 판과의 차이를 보이고 멈춥니다. 고친 파일 하나를 강사 판으로 되돌리려면 그 파일을 지우고 같은 명령을 다시 실행합니다.
 
 실행에 필요한 것은 uv 와 Claude Code(구독 계정으로 로그인), GitHub CLI(`gh`)입니다. `run.py` 가 만드는 `response.json` 과 `uv sync` 가 만드는 `.venv`·`uv.lock` 은 저장소에 올리지 않습니다.
