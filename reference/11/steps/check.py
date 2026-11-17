@@ -7,7 +7,7 @@
 3 원문 대조   — 인용이 비지 않고 그 원문 파일의 글(수집 단계가 적은 머리 세 줄은 빼고)에 글자 그대로 있고, 주장에 든 숫자(부호까지)가 인용에도 있는가
 4 형식       — 소식마다 세 문장과 원문 링크 한 줄인가
 5 근거       — 소식의 문장마다 주장 목록에 주장으로 올라 있는가
-exit code — 0: 통과 · 1: 거부(이유를 찍는다 — runner 가 다시 쓰는 프롬프트에 붙인다)
+exit code — 0: 통과 · 1: 거부(이유를 찍는다 — runner 가 다시 쓰는 프롬프트에 붙인다) · 4: 올릴 글 없음(소식을 모두 뺀 초안 — 남은 단계를 건너뛴다)
 보지 않는 것: 원문 자체가 사실인지 · 주장과 인용이 같은 뜻인지 · 뺀 소식이 맞게 빠졌는지 — 승인 때 사람이 본다
 """
 import json
@@ -63,11 +63,13 @@ def read_draft(text):
     for need in ("주장 목록", "뺀 소식"):
         if need not in names:
             raise ValueError(f"「## {need}」 이 없습니다")
-    if names[-2:] != ["주장 목록", "뺀 소식"] or len(names) < 3:
-        raise ValueError("소식 하나 이상 · 주장 목록 · 뺀 소식이 이 차례로 있어야 합니다")
+    if names[-2:] != ["주장 목록", "뺀 소식"]:
+        raise ValueError("소식 · 주장 목록 · 뺀 소식이 이 차례로 있어야 합니다")
     claims = blocks(parts["주장 목록"], ("- 주장: ", "  원문: ", "  인용: "))
     left = [] if parts["뺀 소식"] == ["- 없음"] else blocks(parts["뺀 소식"], ("- 제목: ", "  원문: ", "  이유: "))
     news = {n: parts[n] for n in names[:-2]}
+    if not news and (claims or not left):          # 소식이 없으면 주장도 없고, 원문마다 뺀 이유가 있어야 한다
+        raise ValueError("소식이 없는 초안은 주장 목록이 비고, 뺀 소식에 원문마다 이유가 있어야 합니다")
     return news, claims, left
 
 
@@ -152,6 +154,9 @@ def main(draft_path, sources_path):
         print(f"거부 — {line}")
     if why:
         return 1
+    if not news:                                   # 가져온 원문을 모두 뺐다 — 거부해서 소식을 짜내게 하지 않는다
+        print(f"올릴 글 없음 — 가져온 원문 {len(left)}건을 모두 뺐습니다")
+        return 4
     print(f"통과 — 블로그 검사 · 소식 {len(news)} · 주장 {len(claims)} · 뺀 소식 {len(left)}")
     return 0
 

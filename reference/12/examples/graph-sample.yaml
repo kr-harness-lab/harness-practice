@@ -1,0 +1,13 @@
+# 견본 초안으로 검사 → 승인만 실행하는 graph — Claude 를 부르지 않는다
+# 새 글이 없거나 수집이 막힌 날에도 PR 을 열고, 읽고, 합쳐 게시하는 데까지 해 볼 수 있다
+# fixtures/sample 의 초안과 원문은 2026-11-17 의 실제 실행에서 나온 것이다
+
+start: check
+
+steps:
+  check:                     # 견본 초안이 지금 검사를 통과하는지 먼저 본다
+    run: python steps/check.py fixtures/sample/ready.md fixtures/sample/sources.json
+    next: approve
+  approve:                   # PR 을 열고 exit code 3 — 내가 합친 것만 게시된다
+    run: python steps/approve.py fixtures/sample/ready.md
+    next: end

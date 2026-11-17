@@ -109,7 +109,9 @@ def main():
         write(log, t="end", at=now(), result="stopped", why=f"그날 실행했는지 확인하지 못했습니다 — {e}")
         print(f"멈춤 — 그날 실행했는지 확인하지 못했습니다: {e}")
         return finish(log, 1)
-    if why:
+    if why and a.answer:                          # 저장해 둔 응답으로 하는 시험 — PR 을 열지 않으니 알리기만 하고 계속한다
+        print(f"시험 실행이라 건너뛰지 않습니다 — {why}")
+    elif why:
         write(log, t="skip", at=now(), run_id=run_id, trigger=trigger, why=why)
         print(f"건너뜀 — {why}")
         return finish(log, 0)

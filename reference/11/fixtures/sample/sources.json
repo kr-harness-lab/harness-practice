@@ -1,0 +1,152 @@
+{
+  "status": "ok",
+  "candidates": [
+    {
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gtig-ai-threat-tracker-q4-2026/",
+      "title": "The era of autonomous attacks has arrived.",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://blog.google/innovation-and-ai/products/gemini-app/regional-voices/",
+      "title": "Regional voices are rolling out in the Gemini app.",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://www.anthropic.com/research/coordinated-vulnerability-disclosure-timelines",
+      "title": "Updating our coordinated vulnerability disclosure policy timelines",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/expanding-chatgpt-for-academic-researchers",
+      "title": "Broadening access to AI for scientists",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/strengthening-online-child-safety",
+      "title": "Strengthening the fight against online child sexual abuse with new tools and support",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/science-at-the-frontier",
+      "title": "Science at the Frontier: How scientists use ChatGPT",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/lvmh-media-division-partnership",
+      "title": "LVMH's Media Division announces strategic partnership with OpenAI",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/our-first-phase-of-embedded-assessments",
+      "title": "Our first phase of embedded assessments",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/advancing-computer-use-for-healthcare-teams",
+      "title": "Advancing computer-use agents for healthcare teams",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare",
+      "title": "More ways to move care forward with ChatGPT for Healthcare",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/index/the-kings-trust-and-openai",
+      "title": "The King's Trust and OpenAI launch £1m partnership",
+      "published": "2026-11-16"
+    },
+    {
+      "url": "https://openai.com/business/customer-stories/holiday-extras-dots",
+      "title": "At Holiday Extras, dots get to work before anyone asks",
+      "published": "2026-11-16"
+    }
+  ],
+  "items": [
+    {
+      "id": "s1",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gtig-ai-threat-tracker-q4-2026/",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s1.md"
+    },
+    {
+      "id": "s2",
+      "url": "https://blog.google/innovation-and-ai/products/gemini-app/regional-voices/",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s2.md"
+    },
+    {
+      "id": "s3",
+      "url": "https://www.anthropic.com/research/coordinated-vulnerability-disclosure-timelines",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s3.md"
+    },
+    {
+      "id": "s4",
+      "url": "https://openai.com/index/expanding-chatgpt-for-academic-researchers",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s4.md"
+    },
+    {
+      "id": "s5",
+      "url": "https://openai.com/index/strengthening-online-child-safety",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s5.md"
+    },
+    {
+      "id": "s6",
+      "url": "https://openai.com/index/science-at-the-frontier",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s6.md"
+    },
+    {
+      "id": "s7",
+      "url": "https://openai.com/index/lvmh-media-division-partnership",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s7.md"
+    },
+    {
+      "id": "s8",
+      "url": "https://openai.com/index/our-first-phase-of-embedded-assessments",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s8.md"
+    },
+    {
+      "id": "s9",
+      "url": "https://openai.com/index/advancing-computer-use-for-healthcare-teams",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s9.md"
+    },
+    {
+      "id": "s10",
+      "url": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s10.md"
+    },
+    {
+      "id": "s11",
+      "url": "https://openai.com/index/the-kings-trust-and-openai",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s11.md"
+    },
+    {
+      "id": "s12",
+      "url": "https://openai.com/business/customer-stories/holiday-extras-dots",
+      "published": "2026-11-16",
+      "fetched_at": "2026-11-17",
+      "file": "fixtures/sample/sources/s12.md"
+    }
+  ],
+  "error": "세 사이트 모두 확인했다. OpenAI 글 페이지 9개는 모두 HTTP 403 으로 막혀 RSS 피드의 제목 · 게시일 · 요약을 옮겼다(s4~s12). WebFetch 가 RSS 요약을 100자쯤에서 잘라 돌려주어 요약이 끝까지 담기지 않았고, s9 는 피드에 요약이 없어 제목 · 게시일만 있다. www.anthropic.com/news 목록에는 오늘 · 어제 글이 없었고, s3 은 같은 사이트의 /research 아래 글이다. blog.google 첫 화면에는 날짜가 없는 글이 여럿 있어 11-17 게시 글이 더 있는지는 확인하지 못했다."
+}
